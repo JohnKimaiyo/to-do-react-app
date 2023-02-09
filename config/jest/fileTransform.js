@@ -1,14 +1,12 @@
 'use strict';
 
-// This is a custom Jest transformer turning style imports into empty objects.
+const path = require('path');
+
+// This is a custom Jest transformer turning file imports into filenames.
 // http://facebook.github.io/jest/docs/en/webpack.html
 
 module.exports = {
-  process() {
-    return 'module.exports = {};';
-  },
-  getCacheKey() {
-    // The output is always the same.
-    return 'cssTransform';
+  process(src, filename) {
+    return `module.exports = ${JSON.stringify(path.basename(filename))};`;
   },
 };
